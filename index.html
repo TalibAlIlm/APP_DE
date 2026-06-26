@@ -218,6 +218,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opac
 .chip .ld{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .brand{display:flex;align-items:center;gap:7px;flex-shrink:0}
 .hbtn{display:flex;gap:4px;flex-shrink:0;align-items:center}
+.lang-btn{font-family:'Cinzel',serif;font-size:11px;font-weight:600;letter-spacing:.04em}
 .hbtn .ic{width:32px;height:32px;display:flex;align-items:center;justify-content:center;position:relative;
   background:transparent;border:1px solid transparent;border-radius:11px;color:var(--muted);
   cursor:pointer;transition:color .16s,background .16s,border-color .16s,transform .1s;padding:0;flex-shrink:0}
@@ -914,21 +915,6 @@ body.overlay-open #review-badge .rv-icon{animation-play-state:paused}
       </p>
     </div>
 
-    <div class="track-note">
-      <strong>📖 Studiere bei einem qualifizierten Shaykh</strong>
-      <div id="shaykh-hadith-box" class="api-hadith-box">
-        <div class="api-loading">
-          <span class="api-dot"></span><span class="api-dot"></span><span class="api-dot"></span>
-        </div>
-      </div>
-      <div id="ibnsirin-hadith-box" class="api-hadith-box" style="display:none">
-        <!-- populated by API only if reachable -->
-      </div>
-      <p>
-        Dieser Wegweiser ist nur eine Orientierungshilfe. Er ersetzt keinen lebendigen Lehrer mit einer verbundenen Überlieferungskette (Isnād) und gesunder Glaubenslehre (ʿAqīda). Suche einen Shaykh, der Wissen mit Praxis verbindet und dessen Methodik mit dem Qur'an und der authentischen Sunna im Verständnis der Salaf as-Sālih übereinstimmt. Ist kein örtlicher Lehrer verfügbar, suche die anerkannten Programme der IUM Madīna, IMSIU Riyad oder Umm al-Qurā Makka.
-      </p>
-    </div>
-
     <p class="track-choose-title">Wähle deine Spezialisierungen</p>
     <p class="track-choose-sub">Dieser Schritt ist optional. Der Qur'an und die grundlegenden Mutūn werden von jedem Studenten auswendig gelernt; die Wahl einer Spezialisierung (Takhaṣṣuṣ) fügt deinem ❀ Auswendiglern-Plan lediglich deren weiterführende Texte hinzu. Wähle so viele du möchtest — oder keine, um nur das grundlegende Ḥifẓ zu behalten.</p>
     <div class="spec-grid" id="spec-grid"></div>
@@ -977,6 +963,7 @@ body.overlay-open #review-badge .rv-icon{animation-play-state:paused}
   <div class="hsep"></div>
   <div class="legend" id="chips"></div>
   <div class="hbtn">
+    <button class="ic lang-btn" id="btn-lang" onclick="goAltLang()" title="In English anzeigen" aria-label="Switch to English">EN</button>
     <button class="ic" id="btn-search" onclick="toggleSearch()" title="Suchen (Strg/&#8984;+F)" aria-label="Suchen">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.5" y2="16.5"/></svg>
     </button>
@@ -1221,7 +1208,7 @@ if(typeof d3==="undefined"){
     if(s){s.innerHTML='<div style="text-align:center;color:#e8c97a;font-family:serif;padding:30px;line-height:1.8">'
       +'<div style="font-size:40px">&#xFDFD;</div>'
       +'<div style="font-size:13px;margin-top:16px;letter-spacing:.1em">Bibliothek konnte nicht geladen werden</div>'
-      +'<div style="font-size:11px;color:#6b5a3e;margin-top:10px">Please check your connection and reload.</div></div>';
+      +'<div style="font-size:11px;color:#6b5a3e;margin-top:10px">Bitte prüfe deine Verbindung und lade neu.</div></div>';
       s.style.animation="none";s.style.opacity="1";}
   });
   throw new Error("D3 not loaded");
@@ -1291,6 +1278,11 @@ const TREE={name:"Talib al-Ilm",type:"root",children:[
       20,{cat:SC.seerah}),
   ]),
   s("Adab — Einstieg",SC.adab,[
+    b("al-Khulāṣa al-Ḥasnāʾ fī Adhkār aṣ-Ṣabāḥ wa-l-Masāʾ",false,
+      "#",
+      "https://d1.islamhouse.com/data/ar/ih_articles/single_01/ar_AlKholasah_AlHasna_fee_Azkar_AlSba7_w_AlMsa.pdf",
+      "https://www.youtube.com/watch?v=P0XmWGImnu4&list=PLjmCBC6YwAF8wfcob8ahKk1mLH9UvbKVN",
+      null,null,{noInfo:true}),
     b("Khulasa Ta'dhim al-Ilm — al-Usaymi",true,
       "https://www.sifatusafwa.com/en/al-ilm-wa-talab-al-ilm/sharh-khulasah-ta-dhim-al-ilm-salih-al-usaymi.html",
       "https://drive.google.com/file/d/1ZHsl7sdmrLkmug6oOyCwIKBRMQHmRcK2/view",
@@ -1313,19 +1305,19 @@ const TREE={name:"Talib al-Ilm",type:"root",children:[
       "https://www.sifatusafwa.com/en/salaf-books-on-sunnah/al-qasidah-al-ha-iyyah-by-imam-ibn-abi-dawud-316h.html",
       "https://files.a-alqasim.com/books/mutoon/081801AlHaiyyahFiAsSunnah.pdf",
       "https://www.youtube.com/watch?v=dSNv2ZOJoVY"),
-    b("Al-Usul al-Thalatha — The Three Fundamentals",true,
+    b("Al-Usul al-Thalatha — Die drei Grundlagen",true,
       "https://www.sifatusafwa.com/en/matn-of-aqeedah/thalathat-ul-usul-shurut-us-salat-al-qawa-id-ul-arba-a-harakat.html",
       "https://a-alqasim.com/books/02mutoon/",
       "https://www.youtube.com/watch?v=z4HQ_Z82J5g"),
-    b("Al-Qawa'id al-Arba'a — The Four Principles",true,
+    b("Al-Qawa'id al-Arba'a — Die vier Grundregeln",true,
       "https://www.sifatusafwa.com/en/matn-of-aqeedah/thalathat-ul-usul-shurut-us-salat-al-qawa-id-ul-arba-a-harakat.html",
       "https://a-alqasim.com/books/02mutoon/",
       "https://www.youtube.com/watch?v=rkOyb-s1fLs"),
-    b("Nawaqid al-Islam — Nullifiers of Islam",true,
+    b("Nawaqid al-Islam — Die Nichtigkeitsgründe des Islam",true,
       "#",
       "https://a-alqasim.com/books/02mutoon/",
       "https://www.youtube.com/watch?v=9y-JmPnN2bI",
-      "It consists of ten nullifiers of Islam compiled by Imam Muhammad bin Abdul Wahhab as a sincere advice to Muslims, so that they may know them and beware of them."),
+      "Er besteht aus zehn Nichtigkeitsgründen des Islam, die Imam Muḥammad ibn ʿAbd al-Wahhāb als aufrichtigen Rat an die Muslime zusammenstellte, damit sie diese kennen und sich vor ihnen hüten."),
   ]),
   s("Fiqh",SC.fiqh,[
     b("Al-Nadhm al-Bayin fi al-Fiqh al-Muta'in",true,
@@ -1334,7 +1326,7 @@ const TREE={name:"Talib al-Ilm",type:"root",children:[
       "https://www.youtube.com/watch?v=eYPhS4QKMUE",
       "Ein sehr knapper Lehrtext in Versform (Mandhūma), in dem Dr. ʿĀmir Bahjat, möge Allah ihn bewahren, jene Bestimmungen in Verse fasste, deren Kenntnis und Anwendung für die meisten Muslime eine individuelle Pflicht (farḍ ʿayn) ist.",
       51),
-    b("Shurut al-Salah — Conditions, Pillars & Obligations",true,
+    b("Shurut al-Salah — Bedingungen, Pfeiler & Pflichten",true,
       "https://www.sifatusafwa.com/en/matn-of-aqeedah/thalathat-ul-usul-shurut-us-salat-al-qawa-id-ul-arba-a-harakat.html",
       "https://a-alqasim.com/books/03mutoon/",
       "https://www.youtube.com/watch?v=T7iGHPI9jeY"),
@@ -1344,7 +1336,7 @@ const TREE={name:"Talib al-Ilm",type:"root",children:[
       "https://www.sifatusafwa.com/en/matn-of-hadeeth/matn-al-arba-een-an-nawawiyyah-harakat.html",
       "https://a-alqasim.com/books/02mutoon/",
       "https://www.youtube.com/watch?v=8cAqVJN0Hnk"),
-    b("Al-Ziyadat — 8 Hadiths of Ibn Rajab",true,
+    b("Al-Ziyadat — 8 Hadithe von Ibn Rajab",true,
       "https://www.sifatusafwa.com/en/hadith-collections-explanations/jaami-al-uloom-wal-hikam-fi-sharh-50-hadeeth-ibn-rajab.html",
       "https://a-alqasim.com/books/02mutoon/",
       "https://www.youtube.com/watch?v=EGsL8LrCGBw&list=PLGeu80ApFDrl8uOXwpuiHW07_6BUPESVR&index=45"),
@@ -1609,7 +1601,7 @@ const TREE={name:"Talib al-Ilm",type:"root",children:[
       "https://www.youtube.com/watch?v=G_SBCyX-GZk"),
   ],"shafi"),
   s("Fiqh — Maliki",SC.fiqh,[
-    b("Bidayat al-Mujtahid wa Nihayat al-Muqtasid — Ibn Rushd (Study of Adillah)",false,
+    b("Bidayat al-Mujtahid wa Nihayat al-Muqtasid — Ibn Rushd (Studium der Adilla)",false,
       "https://www.sifatusafwa.com/en/generalist-fiqh/bidayah-al-mujtahid-wa-nihayah-al-muqtasid-ibn-rushd.html",
       "https://baitalzakat.com/files/zakat-book/baitalzakat.com-B100073.pdf",
       "https://www.youtube.com/watch?v=00xNIcMGSYg&list=PLN8YvwxIUYcPNossjELmWqi8-De8W6Qwv"),
@@ -1758,7 +1750,7 @@ const TREE={name:"Talib al-Ilm",type:"root",children:[
       "https://d1.islamhouse.com/data/ar/ih_books/single/ar_Salim_AlWosool.pdf",
       "https://www.youtube.com/watch?v=4UFKnPZLlyM"),
   ]),
-  s("Nahw — Arabische Grammatik",SC.nahw,[b("Alfiyyat Ibn Malik — 1002 verses",true,
+  s("Nahw — Arabische Grammatik",SC.nahw,[b("Alfiyyat Ibn Malik — 1002 Verse",true,
       "https://www.sifatusafwa.com/en/grammar-an-nahw/matn-alfiat-ibn-maalik-with-harakat.html",
       "https://a-alqasim.com/books/060301alfiyyah/",
       "https://www.youtube.com/watch?v=0YXj22fYejc&list=PLridsOiBWh6DExlUxp8MgNGhA8O7ALPtw")]),
@@ -1914,7 +1906,7 @@ const TREE={name:"Talib al-Ilm",type:"root",children:[
       "https://www.sifatusafwa.com/en/reading-books/maqamat-al-hariri-harakat.html",
       "https://archive.org/details/20201206_20201206_1551/mode/2up",
       "https://www.youtube.com/watch?v=lJv95W29nUI&list=PLYh0SJhKwDYWKkcRud82Ize7oT3H0WNgo"),
-    b("Al-Mu'allaqat — Pre-Islamic Odes",true,
+    b("Al-Mu'allaqat — Vorislamische Oden",true,
       "#",
       "https://archive.org/details/20240516_20240516_0905/mode/2up",
       "https://www.youtube.com/watch?v=c2MqNYwCeGA&list=PLVDPmH__e5s2xvVPmAxEnqGHP3ymD8Vd2",
@@ -1922,8 +1914,8 @@ const TREE={name:"Talib al-Ilm",type:"root",children:[
   ]),
 ]},
 
-/* ── LEVEL V — Mastery ────────────────────────────── */
-{name:"Stufe V",subtitle:"Meisterschaft",level:5,type:"level",children:[
+/* ── LEVEL V — Vertiefung ────────────────────────────── */
+{name:"Stufe V",subtitle:"Vertiefung",level:5,type:"level",children:[
   s("Qur'an — Ḥifẓ",SC.quran,[
     b("Juz 16",true),b("Juz 17",true),b("Juz 18",true),b("Juz 19",true),
     b("Juz 20",true),b("Juz 21",true),b("Juz 22",true),b("Juz 23",true),
@@ -1948,7 +1940,7 @@ const TREE={name:"Talib al-Ilm",type:"root",children:[
       "https://d1.islamhouse.com/data/ar/ih_books/single-03/ar-Alkafih-Alshshafih2.pdf",
       "https://www.youtube.com/watch?v=uVKfDXsSVck&list=PLblfdRYnJ-oz9Xx3h508FyOLGey6LXDXR"),
   ]),
-  s("Nahw — Meisterschaft",SC.nahw,[
+  s("Nahw — Vertiefung",SC.nahw,[
     b("Sharh Ibn Aqil ala al-Alfiyya",false,
       "https://www.sifatusafwa.com/en/grammar-an-nahw/sharh-alfiat-ibn-maalik-by-ibn-aqeel.html",
       "https://archive.org/details/12_20200416/شرح%20ابن%20عقيل%201-2%20%28S%29/mode/2up",
@@ -2146,11 +2138,11 @@ const SPEC_MAP={
   "Khulasa Ta'dhim al-Ilm — al-Usaymi":"core",
   "Adhkar wal-Adaab — Mutoon Series":"core",
   "Al-Qasida al-Ha'iyyah — Ibn Abi Dawud":"core",
-  "Al-Usul al-Thalatha — The Three Fundamentals":"core",
-  "Al-Qawa'id al-Arba'a — The Four Principles":"core",
-  "Nawaqid al-Islam — Nullifiers of Islam":"core",
+  "Al-Usul al-Thalatha — Die drei Grundlagen":"core",
+  "Al-Qawa'id al-Arba'a — Die vier Grundregeln":"core",
+  "Nawaqid al-Islam — Die Nichtigkeitsgründe des Islam":"core",
   "Al-Arba'un al-Nawawiyya":"core",
-  "Al-Ziyadat — 8 Hadiths of Ibn Rajab":"core",
+  "Al-Ziyadat — 8 Hadithe von Ibn Rajab":"core",
   "Al-Ajurrumiyya":"core",
   "Tuhfat al-Atfal":"core",
   "Al-Waraqat — al-Juwayni":"core",
@@ -2180,7 +2172,7 @@ const SPEC_MAP={
   "Al-Muharrar fi al-Hadith — Ibn Abd al-Hadi":"hadith",
   "Alfiyyat al-Hadith al-Iraqi":"hadith",
   "Al-Nadhm al-Bayin fi al-Fiqh al-Muta'in":"core",
-  "Shurut al-Salah — Conditions, Pillars & Obligations":"core",
+  "Shurut al-Salah — Bedingungen, Pfeiler & Pflichten":"core",
   "Matn al-Ghaya wal-Taqrib — Abu Shuja'":"fiqh",
   "Al-Durar al-Bahiyya — al-Shawkani":"fiqh",
   "Al-Nadhm al-Saghir fi Usool al-Fiqh":"fiqh",
@@ -2199,12 +2191,12 @@ const SPEC_MAP={
   "Lamiyyat al-Af'al — Ibn Malik":"arabic",
   "Banat Su'ad — Ka'b ibn Zuhayr":"arabic",
   "Lamiyyat al-Arab — al-Shanfara":"arabic",
-  "Alfiyyat Ibn Malik — 1002 verses":"arabic",
+  "Alfiyyat Ibn Malik — 1002 Verse":"arabic",
   "Mi'at al-Ma'ani wal-Bayan":"arabic",
   "Al-Khazrajiyya — al-Ramiza fi ʿIlmay al-ʿArud wal-Qafiya":"arabic",
   "Uqud al-Juman — al-Suyuti":"arabic",
   "Al-Maqamat al-Hariri — al-Hariri":"arabic",
-  "Al-Mu'allaqat — Pre-Islamic Odes":"arabic",
+  "Al-Mu'allaqat — Vorislamische Oden":"arabic",
   "Hirz al-Amani — Al-Shatibiyya (7 Qira'at)":"tafsir",
   "Nazimat al-Zuhr — al-Shatibi":"tafsir",
   "Al-Durra al-Mudiyya — Ibn al-Jazari":"tafsir",
@@ -2241,7 +2233,7 @@ const SPEC_TRACKS=[
   {k:'hadith',en:'Ḥadīth &amp; Muṣṭalaḥ',ar:'الحديث والمصطلح',c:SC.hadith},
   {k:'tafsir',en:'ʿUlūm al-Qurʾān',ar:'علوم القرآن',c:SC.tafsir},
   {k:'sira',  en:'Sīra &amp; Tārīkh',   ar:'السيرة والتاريخ',c:SC.seerah},
-  {k:'arabic',en:'Arabic &amp; Balāgha',ar:'اللغة والبلاغة',c:SC.nahw}
+  {k:'arabic',en:'Arabisch &amp; Balāgha',ar:'اللغة والبلاغة',c:SC.nahw}
 ];
 function specCount(k){let n=0;for(const key in SPEC_MAP){if(SPEC_MAP[key]===k)n++;}return n;}
 function renderSpecChips(){
@@ -2388,7 +2380,7 @@ function showReviewCard(){
   const meta=SI.find(b=>b.name===name);
   document.getElementById('rv-text-name').textContent=name;
   document.getElementById('rv-text-path').textContent=meta?`${meta.ln} › ${meta.sn}`:'';
-  document.getElementById('rv-progress-text').textContent=`${_reviewIdx+1} of ${_reviewQueue.length}`;
+  document.getElementById('rv-progress-text').textContent=`${_reviewIdx+1} von ${_reviewQueue.length}`;
   document.getElementById('rv-track-fill').style.width=((_reviewIdx)/_reviewQueue.length*100)+'%';
   // show next interval if they pass
   const r=reviewData[name];
@@ -2539,22 +2531,6 @@ function handleProgressBtn(state,event){
   }
 }
 
-/* ── Scholars / Shaykh hadith — static English text + source (no API) ── */
-function fetchShaykhHadith(){
-  const box=document.getElementById("shaykh-hadith-box");
-  if(!box)return;
-  box.innerHTML=`<div class="hadith-english">The Messenger of Allah &#65018; said: <em>"The scholars are the heirs of the Prophets. The Prophets bequeathed neither dinar nor dirham; they bequeathed only knowledge — so whoever acquires it has taken an abundant share."</em></div>
-    <div class="hadith-ref">&#128216; <a href="https://sunnah.com/abudawud:3641" target="_blank" rel="noopener">Sunan Abi Dawud 3641 · Jami al-Tirmidhi 2682</a></div>`;
-}
-
-/* ── Ibn Sirin statement (Mishkat al-Masabih 273) — static text (no API) ── */
-function fetchIbnSirinStatement(){
-  const box=document.getElementById("ibnsirin-hadith-box");
-  if(!box)return;
-  box.innerHTML=`<div class="hadith-english"><em>"Indeed this knowledge is religion, so look carefully at the one from whom you take your religion."</em></div>
-    <div class="hadith-ref">&#128216; <a href="https://sunnah.com/mishkat:273" target="_blank" rel="noopener">Mishkat al-Masabih 273 · statement of Muhammad ibn Sirin (d. 110 AH)</a></div>`;
-  box.style.display="flex";box.style.flexDirection="column";
-}
 /* Universal, browser-independent file save:
    native share sheet (iOS / in-app webviews → "Save to Files") →
    anchor download (desktop & Android) → new tab → graceful notice. */
@@ -2700,7 +2676,7 @@ function jumpToNextUnstarted(){
   if(!target){
     // everything started/finished
     const ind=document.getElementById('saved-indicator');
-    if(ind){ind.textContent='✓ All texts begun — MashaAllah';ind.classList.add('show');
+    if(ind){ind.textContent='✓ Alle Texte begonnen — Mā schāʾ Allāh';ind.classList.add('show');
       setTimeout(()=>{ind.classList.remove('show');ind.textContent='✓ Gespeichert';},2200);}
     return;
   }
@@ -3242,8 +3218,6 @@ function showTrackScreen(){
   document.body.classList.add("overlay-open");
   renderSpecChips();
   fetchNiyyahHadith();
-  fetchShaykhHadith();
-  fetchIbnSirinStatement();
 }
 function hideTrackScreen(){document.getElementById("track-screen").classList.remove("show");document.body.classList.remove("overlay-open");}
 function chooseTrack(m){
@@ -3294,9 +3268,9 @@ function buildSpecMenu(){
   let html='<div class="hdd-head">Spezialisierungen</div>';
   SPEC_TRACKS.forEach(t=>{
     const cnt=specCount(t.k);
-    html+=`<button class="hdd-item${chosenSpecs.has(t.k)?' active':''}" data-spec="${t.k}" onclick="toggleSpec('${t.k}')"><span class="hdd-dot" style="color:${t.c};background:${t.c}"></span><span class="hdd-tx"><b style="color:${t.c}">${t.en}</b><small>${cnt>0?cnt+' texts &#10048;':'reading track'}</small></span></button>`;
+    html+=`<button class="hdd-item${chosenSpecs.has(t.k)?' active':''}" data-spec="${t.k}" onclick="toggleSpec('${t.k}')"><span class="hdd-dot" style="color:${t.c};background:${t.c}"></span><span class="hdd-tx"><b style="color:${t.c}">${t.en}</b><small>${cnt>0?cnt+' Texte &#10048;':'Lese-Pfad'}</small></span></button>`;
   });
-  html+='<div class="hdd-divider"></div><button class="hdd-foot" onclick="clearSpecs()">&#10005; Core only</button>';
+  html+='<div class="hdd-divider"></div><button class="hdd-foot" onclick="clearSpecs()">&#10005; Nur Kerntexte</button>';
   menu.innerHTML=html;
 }
 function syncSpecMenu(){
@@ -3382,7 +3356,7 @@ window.addEventListener("resize",closeAllHdd);
 /* ═══ GUIDED TUTORIAL ═══════════════════════════════════ */
 const TUT_STEPS=[
   {el:null, title:"Willkommen zu deinem Wegweiser",
-   text:"Dies ist dein vollständiger Weg des islamischen Studiums — von den ersten Schritten bis zur Meisterschaft und dazu, ein Ḥāfiẓ des Buches Allahs zu werden, in shaa ALLAH. Lass mich dir in wenigen Augenblicken alles zeigen."},
+   text:"Dies ist dein vollständiger Weg des islamischen Studiums — von den ersten Schritten bis zur Vertiefung und dazu, ein Ḥāfiẓ des Buches Allahs zu werden, in shaa ALLAH. Lass mich dir in wenigen Augenblicken alles zeigen."},
   {el:()=>document.querySelector('.nd'), title:"Der Baum des Wissens",
    text:"Sechs Stufen, jede verzweigt sich in ihre Wissenschaften. Tippe auf eine Stufe, dann auf ein Fach, um seine Texte zu entfalten. Das ⋯-Menü kann jeden Zweig ausklappen oder die Karte neu zentrieren.",fit:true},
   {el:null, title:"In jedem Text",
@@ -3467,7 +3441,7 @@ function showTutStep(){
   document.getElementById("tut-title").textContent=step.title;
   document.getElementById("tut-text").textContent=step.text;
   document.getElementById("tut-prev").classList.toggle("hidden",_tutIdx===0);
-  document.getElementById("tut-next").innerHTML=step.last?"Finish":'Next<span class="ar">›</span>';
+  document.getElementById("tut-next").innerHTML=step.last?"Fertig":'Weiter<span class="ar">›</span>';
   // replay content rise animation
   const body=document.getElementById("tut-body");
   body.classList.remove("in");void body.offsetWidth;body.classList.add("in");
@@ -3686,6 +3660,13 @@ function expandAll(){root.descendants().forEach(d=>{if(d._children){d.children=d
 function collapseToLevels(){root.descendants().forEach(d=>{if(d.depth>=1&&d.children){d._children=d.children;d.children=null;}});clearFocus();update(root);}
 
 /* ═══ VIEW TOGGLE ════════════════════════════════════ */
+/* ===== SPRACHWECHSEL / LANGUAGE SWITCH =====================
+   URL der ENGLISCHEN Ausgabe (bei Bedarf anpassen).
+   Beim Wechsel bleibt der Fortschritt erhalten (gleiche Domain).
+======================================================== */
+const ALT_LANG_URL = "https://talibalilm.github.io/talibul_ilm_tree.html";
+function goAltLang(){ try{ location.href = ALT_LANG_URL; }catch(e){} }
+
 function setView(v){
   if(typeof closeAllHdd==="function")closeAllHdd();
   document.getElementById("btn-tree").classList.toggle("active",v==="tree");
@@ -3789,10 +3770,10 @@ function buildHifz(){
 
   const chip=e=>{
     const r=reviewData[e.book.name];
-    if(e.st==="due")return `<span class="hz-chip due">revise now${r?` · ${r.stage+1}/${SRS_INTERVALS.length}`:""}</span>`;
-    if(e.st==="review"){const d=Math.max(0,Math.round((new Date(r.due)-new Date(todayStr()))/DAY_MS));return `<span class="hz-chip review">in ${d} day${d===1?"":"s"} · ${r.stage+1}/${SRS_INTERVALS.length}</span>`;}
-    if(e.st==="learning")return `<span class="hz-chip learning">learning</span>`;
-    return `<span class="hz-chip todo">not started</span>`;
+    if(e.st==="due")return `<span class="hz-chip due">jetzt wiederholen${r?` · ${r.stage+1}/${SRS_INTERVALS.length}`:""}</span>`;
+    if(e.st==="review"){const d=Math.max(0,Math.round((new Date(r.due)-new Date(todayStr()))/DAY_MS));return `<span class="hz-chip review">in ${d} Tag${d===1?"":"en"} · ${r.stage+1}/${SRS_INTERVALS.length}</span>`;}
+    if(e.st==="learning")return `<span class="hz-chip learning">wird gelernt</span>`;
+    return `<span class="hz-chip todo">nicht begonnen</span>`;
   };
   const sec=(title,sub,color,items)=>{
     if(!items.length)return"";
@@ -3825,10 +3806,10 @@ function fetchNiyyahHadith(){
   const box=document.getElementById("niyyah-hadith-box");
   if(!box)return;
   box.innerHTML=`
-    <div class="hadith-english">The Messenger of Allah &#65018; said: <em>"Actions are but by intentions, and every person shall have only what they intended. So whoever's emigration was for Allah and His Messenger, his emigration was for Allah and His Messenger; and whoever's emigration was for some worldly gain or a woman to marry, his emigration was for that to which he emigrated."</em></div>
+    <div class="hadith-english">Von ʿUmar ibn al-Khaṭṭāb — möge Allah mit ihm zufrieden sein — wird überliefert, dass er sagte: „Der Gesandte Allahs — Allahs Segen und Frieden auf ihm — sagte: ‚Die Taten sind nur entsprechend der Absicht und jedem (Menschen) gebührt nur das, was er beabsichtigte. Wer also seine Auswanderung zu Allah und Seinem Gesandten vollzog, dessen Auswanderung ist zu Allah und Seinem Gesandten (und wird entsprechend vergolten); und wer seine Auswanderung für einen Teil (einen Vorteil) des diesseitigen Lebens unternimmt oder (für) eine Frau, um sie zu heiraten, so ist seine Auswanderung zu dem, zu dem er ausgewandert ist (und wird entsprechend bewertet).‘“<br><br>Und in einer Version bei al-Bukhārī heißt es: „Die Taten sind nur entsprechend der Absichten und jedem (Menschen) gebührt nur das, was er beabsichtigte.“</div>
     <div class="hadith-ref">
       <span>&#128216;</span>
-      <a href="https://sunnah.com/bukhari:1" target="_blank" rel="noopener">Sahih al-Bukhari 1 · Sahih Muslim 1907</a>
+      <a href="https://hadeethenc.com/de/browse/hadith/4560" target="_blank" rel="noopener">Quelle: hadeethenc.com — Hadith 4560</a>
     </div>`;
 }
 
