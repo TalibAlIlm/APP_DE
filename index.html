@@ -1278,7 +1278,7 @@ const TREE={name:"Talib al-Ilm",type:"root",children:[
       20,{cat:SC.seerah}),
   ]),
   s("Adab — Einstieg",SC.adab,[
-    b("al-Khulāṣa al-Ḥasnāʾ fī Adhkār aṣ-Ṣabāḥ wa-l-Masāʾ",false,
+    b("al-Khulāṣa al-Ḥasnāʾ fī Adhkār aṣ-Ṣabāḥ wa-l-Masāʾ",true,
       "#",
       "https://d1.islamhouse.com/data/ar/ih_articles/single_01/ar_AlKholasah_AlHasna_fee_Azkar_AlSba7_w_AlMsa.pdf",
       "https://www.youtube.com/watch?v=P0XmWGImnu4&list=PLjmCBC6YwAF8wfcob8ahKk1mLH9UvbKVN",
@@ -2135,6 +2135,7 @@ const SPEC_MAP={
   "Mandhuma al-Tawhid wal-Iman":"core",
   "Mandhuma Ahsan al-Akhlaq":"core",
   "Al-Mandhuma al-Munira fi Muhimm Ilm al-Sira":"core",
+  "al-Khulāṣa al-Ḥasnāʾ fī Adhkār aṣ-Ṣabāḥ wa-l-Masāʾ":"core",
   "Khulasa Ta'dhim al-Ilm — al-Usaymi":"core",
   "Adhkar wal-Adaab — Mutoon Series":"core",
   "Al-Qasida al-Ha'iyyah — Ibn Abi Dawud":"core",
@@ -3664,7 +3665,7 @@ function collapseToLevels(){root.descendants().forEach(d=>{if(d.depth>=1&&d.chil
    URL der ENGLISCHEN Ausgabe (bei Bedarf anpassen).
    Beim Wechsel bleibt der Fortschritt erhalten (gleiche Domain).
 ======================================================== */
-const ALT_LANG_URL = "https://talibalilm.github.io/talibul_ilm_tree.html";
+const ALT_LANG_URL = "https://talibalilm.github.io/APP/";
 function goAltLang(){ try{ location.href = ALT_LANG_URL; }catch(e){} }
 
 function setView(v){
